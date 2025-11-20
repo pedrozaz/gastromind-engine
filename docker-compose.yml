@@ -16,3 +16,13 @@ services:
     ports:
       - "6379:6379"
     command: redis-server --save 60 1 --loglevel warning
+
+  worker:
+    build: ./worker
+    container_name: gastromind-worker
+    environment:
+     - DB_HOST=postgres
+     - REDIS_HOST=redis
+    depends_on:
+     - postgres
+     - redis
